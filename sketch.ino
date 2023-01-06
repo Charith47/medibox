@@ -74,8 +74,8 @@ struct Time {
 
 Time device_time = {0, 0, 0, 0};
 
-uint32_t time_now = 0;
-uint32_t time_last = 0;
+uint64_t time_now = 0;
+uint64_t time_last = 0;
 
 // Alarm data
 #define NUM_ALARMS 2
@@ -416,12 +416,13 @@ void check_temp_n_humidity() {
     message += "HUMIDITY HIGH \n";
   }
 
-  if (message.length()) print_line(message, 1, 0, 20);
+  if (message.length() > 0) {
+    print_line(message, 1, 0, 20);
+    delay(300);
+  }
 
   if (!all_good) digitalWrite(LED_TEMP, HIGH);
   else digitalWrite(LED_TEMP, LOW);
-
-  delay(300);
 }
 
 void setup() {
